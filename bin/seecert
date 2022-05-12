@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if [ -z "${1}" ]; then
+    echo "USAGE: seecert [domain name]"
+else
+    openssl s_client -showcerts -servername $1 -connect $1:443 </dev/null | openssl x509 -text
+fi
