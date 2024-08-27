@@ -14,7 +14,7 @@ RUN chmod a+x /root/bin/*
 
 ENV PYTHONSTARTUP=/root/.pythonrc
 RUN python -m pip install --upgrade --no-cache-dir pip requests \
-    && rm /root/.python_history
+    && rm -f /root/.python_history
 
 ENV PATH=${PATH}:/root/bin
 

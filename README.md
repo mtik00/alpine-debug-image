@@ -1,7 +1,7 @@
 # mtik00/debug
 
-This project builds an Alpine image with some debugging tools.  The intent is
-to have a small image that's easily runnable somewhere like kubernetes.
+This project builds an Python Alpine image with some debugging tools.  The 
+intent is to have a small image that's easily runnable somewhere like kubernetes.
 
 ## Building
 
