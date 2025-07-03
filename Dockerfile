@@ -1,23 +1,28 @@
 FROM python:alpine
 
-ENV PYTHONDONTWRITEBYTECODE 0
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=0
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONSTARTUP=/home/app-user/.pythonrc
+
+WORKDIR /home/app-user
 
 RUN apk update \
     && apk upgrade --available \
-    && apk add --update --no-cache vim curl bind-tools jq yq openssl \
+    && apk add --update --no-cache vim curl bind-tools jq yq openssl sudo \
     && rm -rf /var/cache/apk/*
 
-COPY dotfiles /root
-COPY bin /root/bin
-RUN chmod a+x /root/bin/*
+COPY dotfiles /home/app-user
+COPY bin /home/app-user/bin
+COPY etc /etc
 
-ENV PYTHONSTARTUP=/root/.pythonrc
-RUN python -m pip install --upgrade --no-cache-dir pip requests \
-    && rm -f /root/.python_history
+RUN chmod a+x /home/app-user/bin/* \
+    && chmod 644 /etc/.login-message \
+    && python -m pip install --upgrade --no-cache-dir pip httpx \
+    && rm -f /home/app-user/.python_history \
+    && adduser -g "App User" app-user -D \
+    && addgroup app-user wheel \
+    && echo "app-user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-ENV PATH=${PATH}:/root/bin
+USER app-user
 
-ENTRYPOINT [ "sh", "-l" ]
-
-WORKDIR /root
+ENTRYPOINT [ "ash", "-l" ]

@@ -5,10 +5,9 @@
 This is an Alpine Linux image meant to be small but useful.
 
 Tools installed:
-    vim curl bind-tools jq yq openssl
+    python vim curl bind-tools jq yq openssl sudo
 
 Python packages installed:
     requests
 
-Check out .profile for aliases and ~/bin for scripts.
-  
+Check out /etc/profile.d/debug-profile.sh for aliases and ~/bin for scripts.

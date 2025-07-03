@@ -1,5 +1,7 @@
-.PHONY: images
+.PHONY: build push
 
-images:
+build:
 	docker build -t mtik00/debug:latest --pull .
+
+push: build
 	docker push mtik00/debug:latest
